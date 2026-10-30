@@ -1,16 +1,24 @@
-This source package builds native packages and packages targeting
-debian architectures.  To shorten a test build, some of these builds
-can be skipped.
+This source package is a compatibility-only repackaging of GNU binutils
+2.41.  It builds just the private runtime libraries:
 
-DEB_BUILD_OPTIONS="parallel=<N> <option> ..." dpkg-buildpackage ...
+  libopcodes-2.41-system.so
+  libbfd-2.41-system.so
+  libsframe.so.1
 
-Where <option> can be:
+They are needed by prebuilt binaries that were linked against the
+binutils 2.41 private libraries, notably the objtool binary shipped in
+some Deepin kernel headers packages.
 
- - nomult to disable the binutils-multilib build
- - nohppa to disable the hppa64 build
- - nopgo to disable the PGO/LTO build
- - nocheck to disable running the testsuite
- - nocross to disable all builds for other targets
+The libraries keep the versioned "-system" SONAMEs introduced by
+debian/patches/135_bfd_soversion.patch, so they can coexist with the
+private libraries of the binutils version currently installed in the
+system (for example 2.47's libopcodes-2.47-system.so and
+libsframe.so.3).
 
-To build only a subset of the target architectures, also
-set CROSS_ARCHS in the env, e.g. CROSS_ARCHS="arm64 ppc64el"
+Build with:
+
+  dpkg-buildpackage -b -uc -us
+
+The 3.0 (quilt) source format applies debian/patches/series before the
+build.  Only bfd, opcodes and libsframe are built; as, ld, objdump and
+the other binutils programs are deliberately not built or installed.

@@ -1,0 +1,3 @@
+# The private binutils libraries carry the full upstream version in
+# their SONAMEs; the package name intentionally does not match them.
+libbinutils-2.41-compat binary: package-name-doesnt-match-sonames

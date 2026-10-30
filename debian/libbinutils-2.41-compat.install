@@ -1,0 +1,4 @@
+usr/lib/*/libbfd-2.41-system.so
+usr/lib/*/libopcodes-2.41-system.so
+usr/lib/*/libsframe.so.1
+usr/lib/*/libsframe.so.1.0.0
